@@ -1,6 +1,18 @@
 import { users } from "../controllers/userControllers";
 
-const isValidUser = (req, res) => {
+const searchUsers = (searchString) => {
+    const regex = new RegExp(searchString, "gi");
+    const matchingUsers = users.filter(
+        (user) =>
+            `${user.Nombre} ${user.Apellido}`.match(regex) ||
+            `${user.Apellido} ${user.Nombre}`.match(regex)
+    );
+
+    if (matchingUsers) return matchingUsers
+    else return "No se encontro ningun usuario que coincida con la busqueda"
+};
+
+const isValidUser = (req, res): boolean => {
     const { DNI, Nombre, Apellido } = req.body;
 
     if (!DNI || !Nombre || !Apellido) {
@@ -13,8 +25,8 @@ const isValidUser = (req, res) => {
         res.send("Error 409: El DNI ingresado ya existe en la base de datos");
         return false;
     }
-    
+
     return true;
 };
 
-export { isValidUser };
+export { isValidUser, searchUsers };
