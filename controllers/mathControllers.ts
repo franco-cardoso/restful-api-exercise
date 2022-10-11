@@ -1,7 +1,7 @@
 const isPrime = (n) => {
     if (n < 2) return false;
     let isPrime = true;
-    for (let i = 2; i < n; i++) {
+    for (let i = 2, r = Math.sqrt(n); i <= r; i++) {
         if (n % i === 0) {
             isPrime = false;
             break;
@@ -15,7 +15,7 @@ const getFibSequence = (req, res) => {
         // prettier-ignore
         if (n < 1) { res.status(400); return "Error 400: El valor ingresado debe ser mayor a 0"; }
         // prettier-ignore
-        if (isNaN(n)) { res.status(400); return "Error 400: El valor ingresado debe ser un número"; }
+        else if (isNaN(n)) { res.status(400); return "Error 400: El valor ingresado debe ser un número"; }
 
         if (req.query.prime) {
             let sequence = [0, 1];
@@ -39,7 +39,8 @@ const getFibSequence = (req, res) => {
 };
 
 const getExponentsTable = (req, res) => {
-    function calcExponents(maxNum, maxExp) {
+    // prettier-ignore
+    function calcExponents(maxNum: number, maxExp: number): { [key: number]: number } {
         let exponents = {};
         for (let i = 1; i <= maxNum; i++) {
             exponents[i] = [];

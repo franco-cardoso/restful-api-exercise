@@ -8,8 +8,8 @@ const searchUsers = (searchString) => {
             `${user.Apellido} ${user.Nombre}`.match(regex)
     );
 
-    if (matchingUsers) return matchingUsers
-    else return "No se encontro ningun usuario que coincida con la busqueda"
+    if (matchingUsers) return matchingUsers;
+    else return "No se encontro ningun usuario que coincida con la busqueda";
 };
 
 const isValidUser = (req, res): boolean => {
@@ -19,14 +19,13 @@ const isValidUser = (req, res): boolean => {
         res.status(400);
         res.send("Error 400: Faltan datos");
         return false;
-    }
-    if (users.find((user) => DNI === user.DNI)) {
+    } 
+    else if (users.find((user) => DNI === user.DNI)) {
         res.status(409);
         res.send("Error 409: El DNI ingresado ya existe en la base de datos");
         return false;
-    }
-
-    return true;
+    } 
+    else return true;
 };
 
 export { isValidUser, searchUsers };
