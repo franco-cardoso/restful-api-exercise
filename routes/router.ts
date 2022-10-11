@@ -2,9 +2,9 @@ import express from "express";
 import { routesMath } from "./routesMath";
 import { routesUsers } from "./routesUsers";
 
-const routes = express.Router();
+const router = express.Router();
 
-routes.use("/users", routesUsers)
-routes.use("/math", routesMath)
+router.use("/users", routesUsers)
+router.use("/math", routesMath)
 
-export {routes}
+export {router}
