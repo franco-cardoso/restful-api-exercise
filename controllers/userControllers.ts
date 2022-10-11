@@ -1,5 +1,5 @@
 import { isValidUser, searchUsers } from "../middleware/userMiddleware";
-
+import { updateConsole } from "../misc/updateConsole";
 type user = {
     ID: number;
     DNI: number;
@@ -17,7 +17,7 @@ let users: user[] = [
         ID: 2,
         DNI: 34685129,
         Nombre: "Carlos",
-        Apellido: "Gonzalez",
+        Apellido: "Gonzalezç",
     },
 ];
 // variable para contar las IDs usadas por separado
@@ -36,8 +36,8 @@ const getUserByID = (req, res) => {
     const requestedUser = users.find((user) => user.ID == req.params.id);
     if (!requestedUser) {
         res.status(404);
-        res.send("Error 404: Este usuario no existe");
-        return;
+        
+        return res.send("Error 404: Este usuario no existe");
     }
     res.json(requestedUser);
 };
@@ -53,8 +53,21 @@ const createUser = (req, res) => {
     }
 };
 
-const editUser = (req, res) => {};
+const editUser = (req, res) => {
+    if (req.body.ID) { return res.send("No puedes cambiar la ID de un usuario")}
+    const indexToEdit = users.indexOf(
+        users.find((user) => user.ID == req.params.id)
+    );
+
+    users[indexToEdit] = { ...users[indexToEdit], ...req.body };
+
+    res.send("Usuario editado con exito");
+    updateConsole()
+};
 
 const removeUser = (req, res) => {};
+
+
+
 
 export { getUsers, getUserByID, createUser, editUser, removeUser, users };
