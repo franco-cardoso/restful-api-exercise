@@ -18,8 +18,8 @@ const getFibSequence = (req, res) => {
         else if (isNaN(n)) { res.status(400); return "Error 400: El valor ingresado debe ser un número"; }
 
         if (req.query.prime) {
-            let sequence = [0, 1];
-            let sequencePrimes = [];
+            let sequence: number[] = [0, 1];
+            let sequencePrimes: number[];
             for (let i = 2; sequencePrimes.length < n; i++) {
                 sequence[i] = sequence[i - 1] + sequence[i - 2];
                 if (isPrime(sequence[i])) {
@@ -39,19 +39,45 @@ const getFibSequence = (req, res) => {
 };
 
 const getExponentsTable = (req, res) => {
+    const { maxNum, maxExp } = req.query;
     // prettier-ignore
-    function calcExponents(maxNum: number, maxExp: number): { [key: number]: number } {
+    function calcExponents(n: number, ex: number): { [key: number]: number } {
         let exponents = {};
-        for (let i = 1; i <= maxNum; i++) {
+        for (let i = 1; i <= n; i++) {
             exponents[i] = [];
-            for (let j = 0; j <= maxExp; j++) {
+            for (let j = 0; j <= ex; j++) {
                 exponents[i].push(i ** j);
             }
         }
         // console.table(exponents)
         return exponents;
     }
-    res.send(calcExponents(req.query.maxNum, req.query.maxExp));
+    res.send(calcExponents(maxNum, maxExp));
 };
 
-export { getFibSequence, getExponentsTable };
+const getFactorial = (req, res) => {
+    const { num } = req.query;
+    function factorize(n: number) {
+        let arr: number[] = [1];
+        let result: number = 1;
+
+        if (num < 0) {
+            for (let i = 1; i < -n; i++) {
+                result *= i + 1;
+                arr.push(-(i + 1));
+            }
+            return { nums: arr.join(" * "), result: -result };
+        } else {
+            for (let i = 1; i < n; i++) {
+                result *= i + 1;
+                arr.push(i + 1);
+            }
+            return { nums: arr.join(" * "), result: result };
+        }
+    }
+
+    const result = factorize(num);
+    res.send(`${result.nums} = ${result.result}`);
+};
+
+export { getFibSequence, getExponentsTable, getFactorial };
