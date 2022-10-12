@@ -1,3 +1,3 @@
 # REST API
 
-REST API class project
+This is a backend REST API for a class exercise
