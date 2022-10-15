@@ -30,6 +30,8 @@ const getUsers = (req, res) => {
     } else {
         res.json(users);
     }
+
+    updateConsole();
 };
 
 const getUserByID = (req, res) => {
@@ -46,10 +48,14 @@ const createUser = (req, res) => {
         res.send("Usuario creado con éxito");
         console.table(users);
     }
+
+    updateConsole();
 };
 
 const editUser = (req, res) => {
-    if (req.body.ID) { return res.send("No puedes cambiar la ID de un usuario"); }
+    if (req.body.ID) {
+        return res.send("No puedes cambiar la ID de un usuario");
+    }
     const indexToEdit = users.indexOf(
         users.find((user) => user.ID == req.params.id)
     );
@@ -57,11 +63,15 @@ const editUser = (req, res) => {
     users[indexToEdit] = { ...users[indexToEdit], ...req.body };
 
     res.send("Usuario editado con éxito");
+    
+    updateConsole();
 };
 
 const removeUser = (req, res) => {
     users = users.filter((user) => user.ID != req.params.id);
     res.send("Usuario eliminado con éxito");
+    
+    updateConsole();
 };
 
 export { getUsers, getUserByID, createUser, editUser, removeUser, users };

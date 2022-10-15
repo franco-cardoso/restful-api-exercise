@@ -3,6 +3,7 @@ import express from "express";
 import dotenv from "dotenv";
 import { updateConsole } from "./misc/updateConsole";
 
+
 dotenv.config();
 const app = express();
 
@@ -13,4 +14,4 @@ app.use(express.json());
 app.use("/api/", router);
 
 app.listen(port);
-// updateConsole();
+updateConsole();

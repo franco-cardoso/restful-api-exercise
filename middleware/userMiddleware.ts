@@ -27,7 +27,7 @@ const searchUsers = (searchString) => {
 const isValidUser = (req, res): boolean => {
     const { DNI, Nombre, Apellido } = req.body;
 
-    if (!DNI || !Nombre || !Apellido) {
+    if (!(DNI && Nombre && Apellido)) {
         res.status(400);
         res.send("Error 400: Faltan datos");
         return false;
