@@ -1,4 +1,4 @@
-export interface User {
+export class User {
     ID: number;
     DNI: number;
     Nombre: string;

@@ -42,11 +42,10 @@ const getUserByID = (req, res) => {
 const createUser = (req, res) => {
     const newUser: User = { ID: (idCount += 1), ...req.body };
 
-    // middleware que devuelve true si la peticion cumple sus condiciones
+    // funcion que pasa la request por una serie de condiciones y devuelve true/false
     if (isValidUser(req, res)) {
         users.push(newUser);
         res.send("Usuario creado con éxito");
-        console.table(users);
     }
 
     updateConsole();

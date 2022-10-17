@@ -28,14 +28,22 @@ const searchUsers = (searchString) => {
 const isValidUser = (req, res): boolean => {
     const { DNI, Nombre, Apellido } = req.body;
 
-    if (!(DNI && Nombre && Apellido)) {
+    if (!DNI || !Nombre || !Apellido) {
         res.status(400);
         res.send("Error 400: Faltan datos");
         return false;
-    } else if (users.find((user) => DNI === user.DNI)) {
+        
+    } else if (typeof DNI !== "number" || typeof Nombre !== "string" || typeof Apellido !== "string") {
+        res.status(400);
+        res.send("Error 400: Los datos recibidos son inválidos");
+        return false
+    } 
+
+    else if (users.find((user) => DNI === user.DNI)) {
         res.status(409);
         res.send("Error 409: El DNI ingresado ya existe en la base de datos");
-        return false;
+        return false
+        
     } else return true;
 };
 
