@@ -1,46 +1,46 @@
 import { isValidUser, searchUsers } from "../middleware/userMiddleware";
+import { User } from "../misc/types";
 import { updateConsole } from "../misc/updateConsole";
-type user = {
-    ID: number;
-    DNI: number;
-    Nombre: string;
-    Apellido: string;
-};
-let users: user[] = [
+
+let users: User[] = [
     {
         ID: 1,
+        DNI: 56812649,
+        Nombre: "Carlos",
+        Apellido: "Benedetti",
+    },
+    {
+        ID: 2,
         DNI: 43828071,
         Nombre: "Ramiro",
         Apellido: "Cabrera",
     },
     {
-        ID: 2,
+        ID: 3,
         DNI: 34685129,
         Nombre: "Carlos",
         Apellido: "Gonzalezç",
     },
 ];
 // variable para contar las IDs usadas por separado
-let idCount = 2;
+let idCount = 3;
 
 const getUsers = (req, res) => {
     if (req.query.search) {
-        const searchResult = searchUsers(req.query.search); // middleware que filtra la lista de usuarios con regex
+        const searchResult = searchUsers(req.query.search); // funcion que filtra la lista de usuarios con regex
         res.json(searchResult);
     } else {
         res.json(users);
     }
-
-    updateConsole();
 };
 
 const getUserByID = (req, res) => {
-    const requestedUser = users.find((user) => user.ID == req.params.id);
+    const requestedUser: User = users.find((user) => user.ID == req.params.id);
     res.json(requestedUser);
 };
 
 const createUser = (req, res) => {
-    const newUser = { ID: (idCount += 1), ...req.body };
+    const newUser: User = { ID: (idCount += 1), ...req.body };
 
     // middleware que devuelve true si la peticion cumple sus condiciones
     if (isValidUser(req, res)) {
@@ -53,24 +53,21 @@ const createUser = (req, res) => {
 };
 
 const editUser = (req, res) => {
-    if (req.body.ID) {
-        return res.send("No puedes cambiar la ID de un usuario");
-    }
+    if (req.body.ID) return res.send("No puedes cambiar la ID de un usuario");
     const indexToEdit = users.indexOf(
         users.find((user) => user.ID == req.params.id)
     );
 
     users[indexToEdit] = { ...users[indexToEdit], ...req.body };
-
     res.send("Usuario editado con éxito");
-    
+
     updateConsole();
 };
 
 const removeUser = (req, res) => {
     users = users.filter((user) => user.ID != req.params.id);
     res.send("Usuario eliminado con éxito");
-    
+
     updateConsole();
 };
 

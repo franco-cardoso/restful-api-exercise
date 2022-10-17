@@ -4,7 +4,7 @@ import { doesExist } from "../middleware/userMiddleware";
 
 
 const routesUsers = express.Router();
-routesUsers.use('/:id',doesExist)
+routesUsers.use('/:id', doesExist);
 
 routesUsers.get("/", getUsers);
 routesUsers.get("/:id", getUserByID);

@@ -1,27 +1,28 @@
 import { users } from "../controllers/userControllers";
+import { User } from "../misc/types";
 
 const doesExist = (req, res, next) => {
     if (!req.params.id) return next();
 
-    const findUser = users.find((user) => user.ID == req.params.id);
+    const findUser: User = users.find((user) => user.ID == req.params.id);
     if (findUser) {
         next();
     } else {
         res.status(404);
-        return res.send("Error 404: El usuario no existe");
+        return res.send("Error 404: Este usuario no existe");
     }
 };
 
 const searchUsers = (searchString) => {
     const regex = new RegExp(searchString, "gi");
-    const matchingUsers = users.filter(
+    const matchingUsers: User[] = users.filter(
         (user) =>
             `${user.Nombre} ${user.Apellido}`.match(regex) ||
             `${user.Apellido} ${user.Nombre}`.match(regex)
     );
 
     if (matchingUsers) return matchingUsers;
-    else return "No se encontro ningun usuario que coincida con la busqueda";
+    else return "No se encontró ningún usuario que coincida con la búsqueda";
 };
 
 const isValidUser = (req, res): boolean => {
