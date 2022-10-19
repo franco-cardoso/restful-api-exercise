@@ -22,24 +22,21 @@ const searchUsers = (searchString) => {
     else return "No se encontró ningún usuario que coincida con la búsqueda";
 };
 
-const isValidUser = (req, res): boolean => {
+const isValidUser = (req, res): boolean | string => {
     const { DNI, Nombre, Apellido } = req.body;
     
     // prettier-ignore
     if (!DNI || !Nombre || !Apellido) {
         res.status(400);
-        res.send("Error 400: Faltan datos");
-        return false;
+        return "Error 400: Faltan datos";
 
     } else if (typeof DNI !== "number" || typeof Nombre !== "string" || typeof Apellido !== "string") {
         res.status(400);
-        res.send("Error 400: Los datos recibidos son inválidos");
-        return false;
+        return "Error 400: Los datos recibidos son inválidos";
 
     } else if (users.find((user) => DNI === user.DNI)) {
         res.status(409);
-        res.send("Error 409: El DNI ingresado ya existe en la base de datos");
-        return false;
+        return "Error 409: El DNI ingresado ya existe en la base de datos";
 
     } else return true;
 };

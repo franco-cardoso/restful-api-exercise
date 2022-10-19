@@ -40,12 +40,15 @@ const getUserByID = (req, res) => {
 };
 
 const createUser = (req, res) => {
+    // isValidUser pasa la request por una serie de condiciones y devuelve true si el usuario es válido o un string de error si no lo es
+    const validation = isValidUser(req, res);
     const newUser: User = { ID: (idCount += 1), ...req.body };
 
-    // funcion que pasa la request por una serie de condiciones y devuelve true/false
-    if (isValidUser(req, res)) {
+    if (validation === true) {
         users.push(newUser);
         res.send("Usuario creado con éxito");
+    } else {
+        res.send(validation);
     }
 
     updateConsole();
