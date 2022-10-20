@@ -35,7 +35,6 @@ const getFibSequence = (req, res) => {
         }
     }
 
-    // prettier-ignore
     if (req.query.amount) {
         const { amount } = req.query;
 
@@ -49,7 +48,6 @@ const getFibSequence = (req, res) => {
 };
 
 const getExponentsTable = (req, res) => {
-    // prettier-ignore
     function calcExponents(n: number, ex: number): { [key: number]: number } {
         let exponents = {};
         for (let i = 1; i <= n; i++) {
@@ -88,7 +86,7 @@ const getFactorial = (req, res) => {
 
     const { num } = req.query;
     const result = factorize(num);
-    res.send(`${result.nums} = ${result.result}`);
+    res.send(`${num}! = ${result.result}     (${result.nums} = ${result.result})`);
 };
 
 export { getFibSequence, getExponentsTable, getFactorial };

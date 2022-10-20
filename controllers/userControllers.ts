@@ -22,8 +22,7 @@ let users: User[] = [
         Apellido: "Gonzalezç",
     },
 ];
-// variable para contar las IDs usadas por separado
-let idCount = 3;
+let idCount = 3; // variable para contar las IDs usadas por separado
 
 const getUsers = (req, res) => {
     if (req.query.search) {
@@ -42,9 +41,9 @@ const getUserByID = (req, res) => {
 const createUser = (req, res) => {
     // isValidUser pasa la request por una serie de condiciones y devuelve true si el usuario es válido o un string de error si no lo es
     const validation = isValidUser(req, res);
-    const newUser: User = { ID: (idCount += 1), ...req.body };
-
+    
     if (validation === true) {
+        const newUser: User = { ID: (idCount += 1), ...req.body };
         users.push(newUser);
         res.send("Usuario creado con éxito");
     } else {

@@ -24,8 +24,7 @@ const searchUsers = (searchString) => {
 
 const isValidUser = (req, res): boolean | string => {
     const { DNI, Nombre, Apellido } = req.body;
-    
-    // prettier-ignore
+
     if (!DNI || !Nombre || !Apellido) {
         res.status(400);
         return "Error 400: Faltan datos";
