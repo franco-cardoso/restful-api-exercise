@@ -39,22 +39,15 @@ const getUserByID = (req, res) => {
 };
 
 const createUser = (req, res) => {
-    // isValidUser pasa la request por una serie de condiciones y devuelve true si el usuario es válido o un string de error si no lo es
-    const validation = isValidUser(req, res);
-    
-    if (validation === true) {
-        const newUser: User = { ID: (idCount += 1), ...req.body };
-        users.push(newUser);
-        res.send("Usuario creado con éxito");
-    } else {
-        res.send(validation);
-    }
+    const newUser: User = { ID: (idCount += 1), ...req.body };
+
+    users.push(newUser);
+    res.send("Usuario creado con éxito");
 
     updateConsole();
 };
 
 const editUser = (req, res) => {
-    if (req.body.ID) return res.send("No puedes cambiar la ID de un usuario");
     const indexToEdit = users.indexOf(
         users.find((user) => user.ID == req.params.id)
     );
