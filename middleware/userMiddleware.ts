@@ -23,9 +23,10 @@ const searchUsers = (searchString) => {
 };
 
 const isValidUser = (req, res, next) => {
-    if (Object.keys(req.body).length < 1) next();
+    if (Object.keys(req.body).length < 1) next(); // saltea las peticiones que no tengan un body
     const { DNI, Nombre, Apellido } = req.body;
 
+    // condiciones para confirmar que la información recibida sea válida
     switch (req.method) {
         case "POST":
             if (!DNI || !Nombre || !Apellido) {
@@ -46,7 +47,7 @@ const isValidUser = (req, res, next) => {
         case "PUT":
             if ((Nombre && typeof Nombre !== "string") || (Apellido && typeof Apellido !== "string")) {
                 res.status(400);
-                res.send("Error 400: Los datos recibidos son inválidos");
+                res.send("Error 400: Los datos recibidos son inválidos");                               
 
             } else if (req.body.ID) {
                 res.status(403);

@@ -26,8 +26,9 @@ let idCount = 3; // variable para contar las IDs usadas por separado
 
 const getUsers = (req, res) => {
     if (req.query.search) {
-        const searchResult = searchUsers(req.query.search); // funcion que filtra la lista de usuarios con regex
-        res.json(searchResult);
+        const searchResult: User[] | string = searchUsers(req.query.search);        // funcion que filtra la lista de usuarios con regex
+        if (typeof searchResult === "string") res.send(searchResult);               // devuelve un string si no hay resultados
+        else res.json(searchResult);
     } else {
         res.json(users);
     }

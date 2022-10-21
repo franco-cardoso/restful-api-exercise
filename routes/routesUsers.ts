@@ -4,9 +4,12 @@ import { doesExist, isValidUser } from "../middleware/userMiddleware";
 
 
 const routesUsers = express.Router();
+
+// middleware
 routesUsers.use('/', isValidUser)
 routesUsers.use('/:id', doesExist);
 
+// controllers
 routesUsers.get("/", getUsers);
 routesUsers.get("/:id", getUserByID);
 routesUsers.post("/",createUser)
